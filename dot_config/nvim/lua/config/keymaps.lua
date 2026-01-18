@@ -162,3 +162,16 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 -- Map Ctrl+u to scroll up with centering
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 map("i","jk","<Esc>",{desc="Escape insert to normal mode "})
+
+map("n", "<leader><Tab>", "<cmd>q!<CR>")
+map("t", "jk", [[<C-\><C-n>]], { noremap = true, silent = true })
+
+
+
+
+map("n", "j", "jzz", opts)
+map("n", "k", "kzz", opts)
+
+map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
+map("n", "<S-j>", ":bnext<CR>", opts)
+map("n", "<S-k>", ":bprevious<CR>", opts)
