@@ -676,5 +676,7 @@ eval "$(zoxide init zsh --cmd cd)"
 alias ep="nvim ~/.zshrc"
 
 alias so="source ~/.zshrc"
+alias epvim="nvim ~/.config/nvim/"
 
 source "$HOME/chez.zsh"
+

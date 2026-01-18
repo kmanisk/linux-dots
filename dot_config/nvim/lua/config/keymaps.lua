@@ -161,3 +161,4 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 
 -- Map Ctrl+u to scroll up with centering
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+map("i","jk","<Esc>",{desc="Escape insert to normal mode "})
