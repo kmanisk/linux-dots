@@ -1,8 +1,8 @@
 {
-  "wallpaper": "/home/manisk/Pictures/wallpapers/0697.jpg",
+  "wallpaper": "/home/manisk/Pictures/wallpapers/0234.jpg",
   "alpha": "100",
   "colors": {
-    "color0": "#1a120e",
+    "color0": "#101510",
     "color1": "",
     "color2": "",
     "color3": "",
@@ -12,11 +12,11 @@
     "color7": "",
     "color8": "",
     "color9": "",
-    "color10": "#ffb692",
+    "color10": "#9ad4a1",
     "color11": "",
     "color12": "",
-    "color13": "#423732",
+    "color13": "#363a35",
     "color14": "",
-    "color15": "#f0dfd8"
+    "color15": "#dfe4dc"
   }
 }
