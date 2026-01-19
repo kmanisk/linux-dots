@@ -1,0 +1,24 @@
+
+#!/usr/bin/env bash
+
+# Fuzzy TUI installer for official + AUR packages using paru
+
+fzf_args=(
+  --multi
+  --preview 'paru -Qi {1} 2>/dev/null || paru -Ssi {1}'
+  --preview-label='alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
+  --preview-label-pos='bottom'
+  --preview-window 'down:65%:wrap'
+  --bind 'alt-p:toggle-preview'
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --color 'pointer:green,marker:green'
+)
+# Preload packages: official + AUR
+pkg_names=$(paru -Slq | fzf "${fzf_args[@]}")
+
+if [[ -n "$pkg_names" ]]; then
+  # Convert newline-separated selections to space-separated for paru
+  echo "$pkg_names" | tr '\n' ' ' | xargs paru -S --noconfirm
+  echo "Installation complete!"
+fi
