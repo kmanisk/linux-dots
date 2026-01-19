@@ -1,130 +1,238 @@
-#!/usr/bin/env zsh
-# Rofi Web Search Script with robust unique prefixes
+
+#!/usr/bin/env bash
+
 export BROWSER=${BROWSER:-firefox}
+export SEARCH_CONFIG="$HOME/.config/surfraw/custom_searches.conf"
+
+# ------------------------
+# Add new search engine
+# ------------------------
+add_search() {
+    local prefix="$1"
+    local url="$2"
+    local description="$3"
+
+    if [[ -z "$prefix" || -z "$url" || -z "$description" ]]; then
+        echo "Usage: $0 --add <prefix> <url_template> <description>"
+        exit 1
+    fi
+
+    mkdir -p "$(dirname "$SEARCH_CONFIG")"
+    echo "$prefix|$url|$description" >> "$SEARCH_CONFIG"
+    echo "✓ Added: $prefix -> $description"
+    exit 0
+}
+
+# ------------------------
+# List custom searches
+# ------------------------
+list_searches() {
+    if [[ ! -f "$SEARCH_CONFIG" ]]; then
+        echo "No custom searches configured yet."
+        exit 0
+    fi
+
+    echo "Custom Search Engines:"
+    echo "====================="
+
+    while IFS='|' read -r prefix url description; do
+        [[ -z "$prefix" || "$prefix" == \#* ]] && continue
+        echo "$prefix/ -> $description"
+        echo "   URL: $url"
+    done < "$SEARCH_CONFIG"
+
+    exit 0
+}
+
+# ------------------------
+# Remove search engine
+# ------------------------
+remove_search() {
+    local prefix="$1"
+
+    if [[ -z "$prefix" ]]; then
+        echo "Usage: $0 --remove <prefix>"
+        exit 1
+    fi
+
+    if [[ ! -f "$SEARCH_CONFIG" ]]; then
+        echo "No custom searches configured."
+        exit 1
+    fi
+
+    grep -v "^$prefix|" "$SEARCH_CONFIG" > "${SEARCH_CONFIG}.tmp"
+    mv "${SEARCH_CONFIG}.tmp" "$SEARCH_CONFIG"
+
+    echo "✓ Removed: $prefix"
+    exit 0
+}
+
+# ------------------------
+# CLI args
+# ------------------------
+case "$1" in
+    --add)
+        add_search "$2" "$3" "$4"
+        ;;
+    --list)
+        list_searches
+        ;;
+    --remove)
+        remove_search "$2"
+        ;;
+    --help)
+        cat <<EOF
+Rofi Web Search Script
+
+Usage:
+  $0
+  $0 --add <prefix> <url> <description>
+  $0 --list
+  $0 --remove <prefix>
+
+Examples:
+  $0 --add tw 'https://twitter.com/search?q={query}' 'Twitter Search'
+EOF
+        exit 0
+        ;;
+esac
+
 pkill rofi 2>/dev/null
 
 # ------------------------
-# Custom hardcoded URLs
+# Declare bash associative arrays
 # ------------------------
-typeset -A CUSTOM_URLS
-CUSTOM_URLS=(
-    f "https://www.flipkart.com/search?q={query}"
-    m "https://www.myntra.com/search?q={query}"
-)
+declare -A CUSTOM_URLS
+declare -A CUSTOM_DESCRIPTIONS
+declare -A PREFIX_MAP
 
 # ------------------------
-# Reserved prefixes (manual shortcuts)
+# Load custom searches from config
 # ------------------------
-typeset -A RESERVED_PREFIXES
-RESERVED_PREFIXES=(
-    a "test"
-    y "youtube"
-)
+if [[ -f "$SEARCH_CONFIG" ]]; then
+    while IFS='|' read -r prefix url description; do
+        [[ -z "$prefix" || "$prefix" == \#* ]] && continue
+        CUSTOM_URLS["$prefix"]="$url"
+        CUSTOM_DESCRIPTIONS["$prefix"]="$description"
+    done < "$SEARCH_CONFIG"
+fi
+
+# Default built-in custom URLs
+CUSTOM_URLS["f"]="https://www.flipkart.com/search?q={query}"
+CUSTOM_DESCRIPTIONS["f"]="Flipkart Search"
+
+CUSTOM_URLS["m"]="https://www.myntra.com/search?q={query}"
+CUSTOM_DESCRIPTIONS["m"]="Myntra Search"
+
+# Reserved prefixes
+PREFIX_MAP["a"]="amazonin"
+#same name file should be in .~/.config/surfraw/elvi/ dir 
+# for custom search engine 
+PREFIX_MAP["y"]="youtube"
 
 # ------------------------
-# Build final prefix map
+# Helper to generate unique prefix
 # ------------------------
-typeset -A PREFIX_MAP
-
-# 1️⃣ Add reserved prefixes first
-for key in a y; do
-    PREFIX_MAP[$key]="${RESERVED_PREFIXES[$key]}"
-done
-
-# Helper function to assign unique prefixes
 assign_unique_prefix() {
     local name="$1"
     local prefix="${name:0:1}"
     local count=1
+
     while [[ -n "${PREFIX_MAP[$prefix]}" ]]; do
         count=$((count+1))
         prefix="${name:0:$count}"
     done
+
     echo "$prefix"
 }
 
-# 2️⃣ Add official Surfraw elvi
+# ------------------------
+# Add official surfraw elvi
+# ------------------------
 if [[ -d /usr/lib/surfraw ]]; then
     for elvi in /usr/lib/surfraw/*; do
         [[ -f "$elvi" ]] || continue
+
         name=$(basename "$elvi")
-        if [[ "$name" == "${RESERVED_PREFIXES[a]}" || "$name" == "${RESERVED_PREFIXES[y]}" ]]; then
-            continue
-        fi
+
+        [[ "$name" == "amazonin" || "$name" == "youtube" ]] && continue
+
         prefix=$(assign_unique_prefix "$name")
-        PREFIX_MAP[$prefix]="$name"
+        PREFIX_MAP["$prefix"]="$name"
     done
 fi
 
-# 3️⃣ Add custom elvi (~/.config/surfraw/elvi)
-if [[ -d ~/.config/surfraw/elvi ]]; then
-    for elvi in ~/.config/surfraw/elvi/*; do
+# ------------------------
+# Add custom elvi
+# ------------------------
+if [[ -d "$HOME/.config/surfraw/elvi" ]]; then
+    for elvi in "$HOME/.config/surfraw/elvi"/*; do
         [[ -f "$elvi" ]] || continue
+
         name=$(basename "$elvi")
-        if [[ "$name" == "${RESERVED_PREFIXES[a]}" || "$name" == "${RESERVED_PREFIXES[y]}" ]]; then
-            continue
-        fi
         prefix=$(assign_unique_prefix "$name")
-        PREFIX_MAP[$prefix]="$name"
+
+        PREFIX_MAP["$prefix"]="$name"
     done
 fi
 
-# 4️⃣ Add custom URLs manually
-for ckey cval in ${(kv)CUSTOM_URLS}; do
-    if [[ -z "${PREFIX_MAP[$ckey]}" ]]; then
-        PREFIX_MAP[$ckey]="CUSTOM:$ckey"
-    fi
+# ------------------------
+# Add custom URL prefixes
+# ------------------------
+for key in "${!CUSTOM_URLS[@]}"; do
+    PREFIX_MAP["$key"]="CUSTOM:$key"
 done
 
 # ------------------------
-# Echo all prefixes automatically
+# Display all prefixes
 # ------------------------
 echo "Available prefixes:"
 
-# Print reserved and manual first
-for key in a y; do
-    [[ -n "${PREFIX_MAP[$key]}" ]] && echo "$key/ -> ${PREFIX_MAP[$key]}"
+# Reserved
+echo "a/ -> Amazon"
+echo "y/ -> YouTube"
+
+# Custom URLs
+for key in "${!CUSTOM_URLS[@]}"; do
+    echo "$key/ -> ${CUSTOM_DESCRIPTIONS[$key]}"
 done
 
-# Print custom URL prefixes
-for ckey in ${(k)CUSTOM_URLS}; do
-    echo "$ckey/ -> CUSTOM (${CUSTOM_URLS[$ckey]%%\?*})"
-done
+# Surfraw engines
+for key in "${!PREFIX_MAP[@]}"; do
+    val="${PREFIX_MAP[$key]}"
 
-# Print remaining prefixes dynamically
-for key val in ${(kv)PREFIX_MAP}; do
-    # Skip already printed
     [[ "$key" == "a" || "$key" == "y" ]] && continue
     [[ "$val" == CUSTOM:* ]] && continue
+
     echo "$key/ -> $val"
 done
 
 echo ""
 
 # ------------------------
-# Prompt for input
+# Get input from rofi
 # ------------------------
 input=$(rofi -dmenu -i -p "Search (prefix/query):")
-[ -z "$input" ] && exit
+[[ -z "$input" ]] && exit
 
 prefix="${input%%/*}"
 query="${input#*/}"
+
 query="${query## }"
-[ -z "$query" ] && exit
+[[ -z "$query" ]] && exit
 
 # ------------------------
 # Execute search
 # ------------------------
 if [[ -n "${CUSTOM_URLS[$prefix]}" ]]; then
-    # Custom hardcoded URL
     url="${CUSTOM_URLS[$prefix]//\{query\}/$(echo "$query" | sed 's/ /+/g')}"
     xdg-open "$url"
+
 elif [[ -n "${PREFIX_MAP[$prefix]}" ]]; then
-    # Surfraw engine (both system and custom)
     engine="${PREFIX_MAP[$prefix]}"
-    engine="${engine#CUSTOM:}"  # Remove CUSTOM: prefix if present
+    engine="${engine#CUSTOM:}"
+
     surfraw -browser="$BROWSER" "$engine" "$query"
 else
-    # Default to Google
     surfraw -browser="$BROWSER" google "$query"
 fi
