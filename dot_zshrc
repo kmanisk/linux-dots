@@ -683,4 +683,6 @@ source "$HOME/chez.zsh"
 
 alias chx='f(){ chmod +x "$1" && ./"$1"; }; f'
 
-export SURFRAW_amazon_url="https://www.amazon.in/s?k=%s"
+# export SURFRAW_amazon_url="https://www.amazon.in/s?k=%s"
+
+export PATH="$HOME/.config/scripts:$PATH"
