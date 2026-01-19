@@ -685,4 +685,6 @@ alias chx='f(){ chmod +x "$1" && ./"$1"; }; f'
 
 
 export BROWSER=firefox
-export PATH="$HOME/.config/scripts:$PATH"
+# Make custom scripts globally available
+export SCRIPTS_DIR="$HOME/.config/scripts"
+export PATH="$SCRIPTS_DIR:$PATH"
