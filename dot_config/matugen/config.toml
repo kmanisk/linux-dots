@@ -114,3 +114,7 @@ post_hook = 'ln -nfs $HOME/.config/matugen/generated/alacritty-colors.toml $HOME
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/matugen/generated/waybar-colors.css'
 post_hook = '~/user_scripts/waybar/waybar_autostart.sh || true; notify-send "Theme Updated"'
+
+[templates.vscode]
+input_path = '~/.config/matugen/templates/vscode.css'
+output_path = '~/.config/matugen/generated/vscode.css'
