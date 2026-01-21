@@ -691,3 +691,6 @@ export BROWSER=firefox
 # Make custom scripts globally available
 export SCRIPTS_DIR="$HOME/.config/scripts"
 export PATH="$SCRIPTS_DIR:$PATH"
+
+# Copy command output to clipboard (Wayland)
+alias clip='wl-copy'
