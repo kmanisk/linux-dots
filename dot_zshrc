@@ -699,3 +699,9 @@ export PATH="$PATH:$HOME/.local/bin"
 s() {
   paru -Ss "$@"
 }
+i() {
+  paru -S --noconfirm --needed "$@"
+}
+d() {
+  paru -Rns --noconfirm "$@"
+}
