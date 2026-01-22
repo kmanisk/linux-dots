@@ -740,3 +740,14 @@ d() {
     return 1
   fi
 }
+updateall() {
+    echo "==> Updating official packages (pacman)..."
+    sudo pacman -Syu --noconfirm
+
+    if command -v paru >/dev/null 2>&1; then
+        echo "==> Updating AUR packages (paru)..."
+        paru -Syu --noconfirm
+    fi
+
+    echo "==> Done!"
+}
