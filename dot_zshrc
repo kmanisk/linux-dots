@@ -696,3 +696,6 @@ export PATH="$SCRIPTS_DIR:$PATH"
 alias clip='wl-copy'
 
 export PATH="$PATH:$HOME/.local/bin"
+s() {
+  paru -Ss "$@"
+}
