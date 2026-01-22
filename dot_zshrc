@@ -703,5 +703,40 @@ i() {
   paru -S --noconfirm --needed "$@"
 }
 d() {
-  paru -Rns --noconfirm "$@"
+  # packages that must never be removed
+  local protected=(
+    linux linux-lts linux-zen
+    systemd systemd-libs
+    glibc gcc
+    bash zsh
+    pacman paru
+    sudo
+    dbus
+    util-linux
+    base base-devel
+  )
+
+  # no args → bail
+  [[ $# -eq 0 ]] && {
+    echo "d: no package specified"
+    return 1
+  }
+
+  # block protected packages
+  for pkg in "$@"; do
+    for p in "${protected[@]}"; do
+      [[ "$pkg" == "$p" ]] && {
+        echo "d: refusing to remove protected package: $pkg"
+        return 1
+      }
+    done
+  done
+
+  # dry dependency sanity check
+  if paru -Qi "$@" >/dev/null 2>&1; then
+    paru -Rns --noconfirm "$@"
+  else
+    echo "d: package not installed"
+    return 1
+  fi
 }
