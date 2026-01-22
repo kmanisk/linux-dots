@@ -694,3 +694,5 @@ export PATH="$SCRIPTS_DIR:$PATH"
 
 # Copy command output to clipboard (Wayland)
 alias clip='wl-copy'
+
+export PATH="$PATH:$HOME/.local/bin"
