@@ -1,46 +1,46 @@
 
 .theme-dark {
-	--accent-h:calc(175.0/255*360);
-	--accent-s:calc(67.05882549285889/255*100%);
-	--accent-l:calc(50.0/255*100%);
+	--accent-h:calc(352.987012987013/255*360);
+	--accent-s:calc(84.90196168422699/255*100%);
+	--accent-l:calc(100.0/255*100%);
 
-  --text-normal:#dde4e2;
-  --text-muted:#bec9c7;
-  --text-faint:#889391;
+  --text-normal:#f0dedf;
+  --text-muted:#d7c1c3;
+  --text-faint:#9f8c8e;
 
-  --background-primary:#0e1514; /* editor and right ribbon */
-  --background-secondary:#0e1514; /* left ribbon */ 
-  --background-modifier-hover:#324b49;
-  --background-modifier-active-hover:#b0ccc9;
-  --background-modifier-message:#0e1514;
-  --background-modifier-form-field:#00504c;
+  --background-primary:#1a1112; /* editor and right ribbon */
+  --background-secondary:#1a1112; /* left ribbon */ 
+  --background-modifier-hover:#5c3f42;
+  --background-modifier-active-hover:#e5bdc0;
+  --background-modifier-message:#1a1112;
+  --background-modifier-form-field:#72333d;
 
-  --ribbon-background:#0e1514;
-  --divider-color:#324b49;
-  --scrollbar-thumb-bg:#cce8e5;
-  --status-bar-border-color:#324b49;
-  --status-bar-background:#0e1514;
-  --titlebar-background:#0e1514;
-  --titlebar-text-color:#dde4e2;
+  --ribbon-background:#1a1112;
+  --divider-color:#5c3f42;
+  --scrollbar-thumb-bg:#ffd9dd;
+  --status-bar-border-color:#5c3f42;
+  --status-bar-background:#1a1112;
+  --titlebar-background:#1a1112;
+  --titlebar-text-color:#f0dedf;
 
-  --nav-item-color:#bec9c7;
-  --nav-item-color-active:#9df2ea;
-  --nav-item-background-active:#00504c;
-  --nav-item-color-hover:#cce8e5;
-  --nav-item-background-hover:#324b49;
+  --nav-item-color:#d7c1c3;
+  --nav-item-color-active:#ffd9dd;
+  --nav-item-background-active:#72333d;
+  --nav-item-color-hover:#ffd9dd;
+  --nav-item-background-hover:#5c3f42;
 
-  --tab-background-active:#00504c;
-  --tab-text-color-active:#9df2ea;
-  --tab-text-color:#bec9c7;
+  --tab-background-active:#72333d;
+  --tab-text-color-active:#ffd9dd;
+  --tab-text-color:#d7c1c3;
 
-  --icon-color:#dde4e2;
+  --icon-color:#f0dedf;
 
-  --h1-color:#81d5ce;
-  --h2-color: color-mix(in srgb, #81d5ce, #b0c9e7);
-  --h3-color:#b0c9e7;
-  --h4-color: color-mix(in srgb, #81d5ce, #b0ccc9);
-  --h5-color:#b0ccc9;
-  --h6-color: color-mix(in srgb, #b0c9e7, #b0ccc9);
+  --h1-color:#ffb2bb;
+  --h2-color: color-mix(in srgb, #ffb2bb, #e9bf8f);
+  --h3-color:#e9bf8f;
+  --h4-color: color-mix(in srgb, #ffb2bb, #e5bdc0);
+  --h5-color:#e5bdc0;
+  --h6-color: color-mix(in srgb, #e9bf8f, #e5bdc0);
 
 
   }
@@ -48,62 +48,62 @@
 
 /* add parts not accessible without specific selector?*/
 .theme-dark .sidebar-toggle-button.mod-left {
-  color:#dde4e2;
-  background:#0e1514;
+  color:#f0dedf;
+  background:#1a1112;
 }
 .theme-dark .sidebar-toggle-button.mod-right {
-  color:#dde4e2;
-  background:#0e1514;
+  color:#f0dedf;
+  background:#1a1112;
 }
 
 .theme-dark .workspace-tab-header-container{
-  background:#0e1514;
+  background:#1a1112;
 }
 
 
 /* copy for light mode */
 .theme-light {
-	--accent-h:calc(177.16981152366301/255*360);
-	--accent-s:calc(20.78431397676468/255*100%);
-	--accent-l:calc(100.0/255*100%);
+	--accent-h:calc(350.43478366219927/255*360);
+	--accent-s:calc(42.15686470270157/255*100%);
+	--accent-l:calc(32.093023387337446/255*100%);
 
-  --text-normal:#161d1c;
-  --text-muted:#3f4947;
-  --text-faint:#6f7978;
+  --text-normal:#22191a;
+  --text-muted:#524344;
+  --text-faint:#847374;
 
-  --background-primary:#f4fbf9; /* editor and right ribbon */
-  --background-secondary:#d5dbda; /* left ribbon */ 
-  --background-modifier-hover:#cce8e5;
-  --background-modifier-active-hover:#4a6361;
-  --background-modifier-message:#d5dbda;
-  --background-modifier-form-field:#9df2ea;
+  --background-primary:#fff8f7; /* editor and right ribbon */
+  --background-secondary:#e7d6d7; /* left ribbon */ 
+  --background-modifier-hover:#ffd9dd;
+  --background-modifier-active-hover:#76565a;
+  --background-modifier-message:#e7d6d7;
+  --background-modifier-form-field:#ffd9dd;
 
-  --ribbon-background:#f4fbf9;
-  --divider-color:#cce8e5;
-  --scrollbar-thumb-bg:#051f1e;
-  --status-bar-border-color:#cce8e5;
-  --status-bar-background:#f4fbf9;
-  --titlebar-background:#f4fbf9;
-  --titlebar-text-color:#161d1c;
+  --ribbon-background:#fff8f7;
+  --divider-color:#ffd9dd;
+  --scrollbar-thumb-bg:#2c1518;
+  --status-bar-border-color:#ffd9dd;
+  --status-bar-background:#fff8f7;
+  --titlebar-background:#fff8f7;
+  --titlebar-text-color:#22191a;
 
-  --nav-item-color:#3f4947;
-  --nav-item-color-active:#00201e;
-  --nav-item-background-active:#9df2ea;
-  --nav-item-color-hover:#051f1e;
-  --nav-item-background-hover:#cce8e5;
+  --nav-item-color:#524344;
+  --nav-item-color-active:#3b0714;
+  --nav-item-background-active:#ffd9dd;
+  --nav-item-color-hover:#2c1518;
+  --nav-item-background-hover:#ffd9dd;
 
-  --tab-background-active:#9df2ea;
-  --tab-text-color-active:#00201e;
-  --tab-text-color:#3f4947;
+  --tab-background-active:#ffd9dd;
+  --tab-text-color-active:#3b0714;
+  --tab-text-color:#524344;
 
-  --icon-color:#161d1c;
+  --icon-color:#22191a;
 
-  --h1-color:#006a65;
-  --h2-color: color-mix(in srgb, #006a65, #48607b);
-  --h3-color:#48607b;
-  --h4-color: color-mix(in srgb, #006a65, #4a6361);
-  --h5-color:#4a6361;
-  --h6-color: color-mix(in srgb, #48607b, #4a6361);
+  --h1-color:#8e4954;
+  --h2-color: color-mix(in srgb, #8e4954, #785831);
+  --h3-color:#785831;
+  --h4-color: color-mix(in srgb, #8e4954, #76565a);
+  --h5-color:#76565a;
+  --h6-color: color-mix(in srgb, #785831, #76565a);
 
 
   }
@@ -111,14 +111,14 @@
 
 /* add parts not accessible without specific selector?*/
 .theme-light .sidebar-toggle-button.mod-left {
-  color:#161d1c;
-  background:#f4fbf9;
+  color:#22191a;
+  background:#fff8f7;
 }
 .theme-light .sidebar-toggle-button.mod-right {
-  color:#161d1c;
-  background:#f4fbf9;
+  color:#22191a;
+  background:#fff8f7;
 }
 
 .theme-light .workspace-tab-header-container{
-  background:#f4fbf9;
+  background:#fff8f7;
 }
