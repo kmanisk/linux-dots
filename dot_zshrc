@@ -766,3 +766,12 @@ fs() {
     cd "$(dirname "$target")" || return 1
   fi
 }
+alias wi='cd /mnt/win'
+# Set your preferred file manager here
+filemanager="thunar"
+
+# Open file manager in current dir or given path
+e() {
+    local target="${1:-.}"  # Use first argument, or current dir if none
+    "$filemanager" "$target"
+}
