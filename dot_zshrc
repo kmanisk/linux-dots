@@ -751,3 +751,18 @@ updateall() {
 
     echo "==> Done!"
 }
+# system-wide fuzzy search + smart cd
+fs() {
+  local target
+
+  target=$(fd --hidden --follow --exclude .git 2>/dev/null \
+    | fzf --height=40% --layout=reverse --border --prompt="search> ")
+
+  [[ -z "$target" ]] && return 0
+
+  if [[ -d "$target" ]]; then
+    cd "$target" || return 1
+  elif [[ -f "$target" ]]; then
+    cd "$(dirname "$target")" || return 1
+  fi
+}
