@@ -782,3 +782,4 @@ vkmark-nv() {
     VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json \
     vkmark "$@"
 }
+# alias firefox="firefox --new-window"
