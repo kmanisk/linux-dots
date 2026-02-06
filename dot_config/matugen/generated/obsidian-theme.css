@@ -1,46 +1,46 @@
 
 .theme-dark {
-	--accent-h:calc(207.85714285714286/255*360);
-	--accent-s:calc(94.50980424880981/255*100%);
+	--accent-h:calc(206.8965517241379/255*360);
+	--accent-s:calc(94.31372582912445/255*100%);
 	--accent-l:calc(100.0/255*100%);
 
   --text-normal:#ffffff;
   --text-muted:#ffffff;
   --text-faint:#eaf1f7;
 
-  --background-primary:#101417; /* editor and right ribbon */
-  --background-secondary:#101417; /* left ribbon */ 
-  --background-modifier-hover:#b2c5d4;
-  --background-modifier-active-hover:#e3f2ff;
-  --background-modifier-message:#101417;
-  --background-modifier-form-field:#8fcaf2;
+  --background-primary:#0f1417; /* editor and right ribbon */
+  --background-secondary:#0f1417; /* left ribbon */ 
+  --background-modifier-hover:#b2c5d3;
+  --background-modifier-active-hover:#e2f2ff;
+  --background-modifier-message:#0f1417;
+  --background-modifier-form-field:#8ccaf0;
 
-  --ribbon-background:#101417;
-  --divider-color:#b2c5d4;
+  --ribbon-background:#0f1417;
+  --divider-color:#b2c5d3;
   --scrollbar-thumb-bg:#000000;
-  --status-bar-border-color:#b2c5d4;
-  --status-bar-background:#101417;
-  --titlebar-background:#101417;
+  --status-bar-border-color:#b2c5d3;
+  --status-bar-background:#0f1417;
+  --titlebar-background:#0f1417;
   --titlebar-text-color:#ffffff;
 
   --nav-item-color:#ffffff;
   --nav-item-color-active:#000000;
-  --nav-item-background-active:#8fcaf2;
+  --nav-item-background-active:#8ccaf0;
   --nav-item-color-hover:#000000;
-  --nav-item-background-hover:#b2c5d4;
+  --nav-item-background-hover:#b2c5d3;
 
-  --tab-background-active:#8fcaf2;
+  --tab-background-active:#8ccaf0;
   --tab-text-color-active:#000000;
   --tab-text-color:#ffffff;
 
   --icon-color:#ffffff;
 
-  --h1-color:#e3f2ff;
-  --h2-color: color-mix(in srgb, #e3f2ff, #f5edff);
-  --h3-color:#f5edff;
-  --h4-color: color-mix(in srgb, #e3f2ff, #e3f2ff);
-  --h5-color:#e3f2ff;
-  --h6-color: color-mix(in srgb, #f5edff, #e3f2ff);
+  --h1-color:#e2f2ff;
+  --h2-color: color-mix(in srgb, #e2f2ff, #f4edff);
+  --h3-color:#f4edff;
+  --h4-color: color-mix(in srgb, #e2f2ff, #e2f2ff);
+  --h5-color:#e2f2ff;
+  --h6-color: color-mix(in srgb, #f4edff, #e2f2ff);
 
 
   }
@@ -49,22 +49,22 @@
 /* add parts not accessible without specific selector?*/
 .theme-dark .sidebar-toggle-button.mod-left {
   color:#ffffff;
-  background:#101417;
+  background:#0f1417;
 }
 .theme-dark .sidebar-toggle-button.mod-right {
   color:#ffffff;
-  background:#101417;
+  background:#0f1417;
 }
 
 .theme-dark .workspace-tab-header-container{
-  background:#101417;
+  background:#0f1417;
 }
 
 
 /* copy for light mode */
 .theme-light {
-	--accent-h:calc(198.8571440668738/255*360);
-	--accent-s:calc(13.725490868091583/255*100%);
+	--accent-h:calc(197.6470602040781/255*360);
+	--accent-s:calc(13.333334028720856/255*100%);
 	--accent-l:calc(100.0/255*100%);
 
   --text-normal:#000000;
@@ -72,38 +72,38 @@
   --text-faint:#262d32;
 
   --background-primary:#f6fafe; /* editor and right ribbon */
-  --background-secondary:#b5b9be; /* left ribbon */ 
-  --background-modifier-hover:#3a4b58;
-  --background-modifier-active-hover:#1c2e3a;
-  --background-modifier-message:#b5b9be;
-  --background-modifier-form-field:#004e6f;
+  --background-secondary:#b5b9bd; /* left ribbon */ 
+  --background-modifier-hover:#394c57;
+  --background-modifier-active-hover:#1c2e39;
+  --background-modifier-message:#b5b9bd;
+  --background-modifier-form-field:#004f6d;
 
   --ribbon-background:#f6fafe;
-  --divider-color:#3a4b58;
+  --divider-color:#394c57;
   --scrollbar-thumb-bg:#ffffff;
-  --status-bar-border-color:#3a4b58;
+  --status-bar-border-color:#394c57;
   --status-bar-background:#f6fafe;
   --titlebar-background:#f6fafe;
   --titlebar-text-color:#000000;
 
   --nav-item-color:#000000;
   --nav-item-color-active:#ffffff;
-  --nav-item-background-active:#004e6f;
+  --nav-item-background-active:#004f6d;
   --nav-item-color-hover:#ffffff;
-  --nav-item-background-hover:#3a4b58;
+  --nav-item-background-hover:#394c57;
 
-  --tab-background-active:#004e6f;
+  --tab-background-active:#004f6d;
   --tab-text-color-active:#ffffff;
   --tab-text-color:#000000;
 
   --icon-color:#000000;
 
-  --h1-color:#003046;
-  --h2-color: color-mix(in srgb, #003046, #2f2747);
-  --h3-color:#2f2747;
-  --h4-color: color-mix(in srgb, #003046, #1c2e3a);
-  --h5-color:#1c2e3a;
-  --h6-color: color-mix(in srgb, #2f2747, #1c2e3a);
+  --h1-color:#003044;
+  --h2-color: color-mix(in srgb, #003044, #2e2847);
+  --h3-color:#2e2847;
+  --h4-color: color-mix(in srgb, #003044, #1c2e39);
+  --h5-color:#1c2e39;
+  --h6-color: color-mix(in srgb, #2e2847, #1c2e39);
 
 
   }

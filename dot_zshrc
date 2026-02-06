@@ -775,3 +775,10 @@ e() {
     local target="${1:-.}"  # Use first argument, or current dir if none
     "$filemanager" "$target"
 }
+vkmark-nv() {
+  env \
+    __NV_PRIME_RENDER_OFFLOAD=1 \
+    __VK_LAYER_NV_optimus=NVIDIA_only \
+    VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json \
+    vkmark "$@"
+}
