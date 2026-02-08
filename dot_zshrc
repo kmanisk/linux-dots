@@ -106,10 +106,10 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive mat
 
 # --- Vi Mode Keybindings ---
 # Enables the use of Vim-like keybindings in the shell for modal editing.
-bindkey -v
+# bindkey -v
 # Set the timeout for ambiguous key sequences (e.g., after pressing ESC).
 # A low value makes the transition to normal mode in Vi mode feel instantaneous.
-export KEYTIMEOUT=40
+# export KEYTIMEOUT=40
 
 # --- Neovim Integration ---
 # Press 'v' in normal mode to edit the current command in Neovim.
@@ -782,4 +782,120 @@ vkmark-nv() {
     VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json \
     vkmark "$@"
 }
-# alias firefox="firefox --new-window"
+gpu() {
+  local BL_FILE="/etc/modprobe.d/blacklist-nvidia.conf"
+
+  local -a REQUIRED_LINES=(
+    "blacklist nvidia"
+    "blacklist nvidia_drm"
+    "blacklist nvidia_modeset"
+    "blacklist nvidia_uvm"
+  )
+
+  _require_root() {
+    [[ $EUID -eq 0 ]] || {
+      echo "❌ Run with sudo: sudo gpu {on|off|status}"
+      return 1
+    }
+  }
+
+  _file_has_active_rules() {
+    [[ -f "$BL_FILE" ]] || return 1
+
+    local active=0
+    for rule in "${REQUIRED_LINES[@]}"; do
+      grep -Eq "^[[:space:]]*$rule([[:space:]]|\$)" "$BL_FILE" && ((active++))
+    done
+
+    [[ $active -eq ${#REQUIRED_LINES[@]} ]]
+  }
+
+  _file_has_commented_rules() {
+    [[ -f "$BL_FILE" ]] || return 1
+
+    local commented=0
+    for rule in "${REQUIRED_LINES[@]}"; do
+      grep -Eq "^[[:space:]]*#[[:space:]]*$rule" "$BL_FILE" && ((commented++))
+    done
+
+    [[ $commented -eq ${#REQUIRED_LINES[@]} ]]
+  }
+
+  _runtime_loaded() {
+    lsmod | grep -q "^nvidia"
+  }
+
+  _disable_gpu() {
+    echo "🔌 Disabling NVIDIA GPU..."
+
+    if _file_has_active_rules; then
+      echo "⚠️  NVIDIA already disabled at boot level"
+    else
+      mkdir -p "$(dirname "$BL_FILE")"
+      : > "$BL_FILE"
+      for rule in "${REQUIRED_LINES[@]}"; do
+        echo "$rule" >> "$BL_FILE"
+      done
+      echo "📄 Blacklist written"
+    fi
+
+    if _runtime_loaded; then
+      echo "⚠️  NVIDIA currently in use (cannot unload in active session)"
+      echo "🔁 Reboot required for full disable"
+    else
+      echo "✅ NVIDIA not loaded at runtime"
+    fi
+  }
+
+  _enable_gpu() {
+    echo "⚡ Enabling NVIDIA GPU..."
+
+    if [[ -f "$BL_FILE" ]]; then
+      sed -i 's/^[[:space:]]*blacklist/# blacklist/' "$BL_FILE"
+      echo "📄 Blacklist commented out"
+    else
+      echo "ℹ️  No blacklist file present"
+    fi
+
+    echo "🔁 Reboot required to load NVIDIA"
+  }
+
+  _status() {
+    echo "=== NVIDIA GPU STATUS ==="
+
+    if [[ ! -f "$BL_FILE" ]]; then
+      echo "📄 Blacklist file: ❌ missing"
+      echo "➡️  Boot state: ENABLED"
+    elif _file_has_active_rules; then
+      echo "📄 Blacklist file: ✅ active"
+      echo "➡️  Boot state: DISABLED"
+    elif _file_has_commented_rules; then
+      echo "📄 Blacklist file: 💤 commented"
+      echo "➡️  Boot state: ENABLED"
+    else
+      echo "📄 Blacklist file: ⚠️ partial / inconsistent"
+      echo "➡️  Boot state: UNKNOWN"
+    fi
+
+    if _runtime_loaded; then
+      echo "⚡ Runtime state: GPU LOADED & ACTIVE"
+    else
+      echo "💤 Runtime state: GPU NOT loaded"
+    fi
+  }
+
+  case "${1:-}" in
+    off)
+      _require_root && _disable_gpu
+      ;;
+    on)
+      _require_root && _enable_gpu
+      ;;
+    status)
+      _status
+      ;;
+    *)
+      echo "Usage: gpu {on|off|status}"
+      ;;
+  esac
+}
