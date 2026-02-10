@@ -1,6 +1,10 @@
 [config]
 # ...
 
+[templates.master_dump]
+input_path = "~/.config/matugen/templates/master-dump.jsonl"
+output_path = "~/.config/matugen/generated/master-dump.jsonl"
+
 # -----------------------------------------------------------------------------
 # GTK & Qt
 # -----------------------------------------------------------------------------
@@ -137,6 +141,14 @@ output_path = '~/.config/matugen/generated/obsidian-theme.css'
 post_hook   = '''
 mkdir -p $HOME/Documents/pensive/.obsidian/snippets;
 ln -nfs $HOME/.config/matugen/generated/obsidian-theme.css $HOME/Documents/pensive/.obsidian/snippets/matugen-theme.css
+'''
+
+[templates.vesktop]
+input_path  = '~/.config/matugen/templates/midnight-discord.css'
+output_path = '~/.config/matugen/generated/midnight-discord.css'
+post_hook   = '''
+mkdir -p $HOME/~/.config/vesktop/themes/;
+ln -nfs $HOME/.config/matugen/generated/midnight-discord.css $HOME/.config/vesktop/themes/midnight-discord.css
 '''
 
 # -----------------------------------------------------------------------------
