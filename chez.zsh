@@ -71,3 +71,5 @@ function dall() {
     echo "Pushing everything..."
     dp
 }
+
+# added for testing
